@@ -1,0 +1,19 @@
+---
+
+collections:
+  # "core" ansible collections
+  - name: community.general
+  - name: ansible.posix
+  
+  # controller ansible collections
+  - name: ansible.controller
+  - name: redhat_cop.controller_configuration
+
+  # Podman collections
+  - name: containers.podman
+
+  # Networking collections
+  - name: ansible.netcommon
+
+  # OS Build collections
+  - git+https://github.com/ansible-collections/osbuild.composer
