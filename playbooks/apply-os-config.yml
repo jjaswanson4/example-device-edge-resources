@@ -1,0 +1,32 @@
+---
+
+- name: configure os settings
+  hosts:
+    - all
+  gather_facts: no
+  pre_tasks:
+    - name: wait for first boot to finish
+      ansible.builtin.wait_for_connection:
+        sleep: 10
+  
+    - name: run the setup module
+      ansible.builtin.setup:
+
+  tasks:
+    - name: set the system hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: set the system timezone
+      community.general.timezone:
+        name: America/Chicago
+
+  post_tasks:
+    - name: check the status of the system
+      ansible.builtin.shell:
+        cmd: rpm-ostree status
+      register: rpm_ostree_status
+  
+    - name: print out rpm-ostree status
+      ansible.builtin.debug:
+        msg: "{{ rpm_ostree_status.stdout_lines }}"
